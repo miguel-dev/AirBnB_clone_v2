@@ -43,8 +43,18 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
-            obj.save()
             print("{}".format(obj.id))
+            for i in my_list[1:]:
+                atrs = i.split("=")
+                atrs[1] = atrs[1].replace('_', ' ')
+                try:
+                    s = eval(atrs[1])
+                    atrs[1] = s
+                except:
+                    pass
+                if type(atrs[1] is not tuple):
+                    setattr(obj, atrs[0], atrs[1])
+            obj.save()
         except SyntaxError:
             print("** class name missing **")
         except NameError:
