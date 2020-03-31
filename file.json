@@ -1,1 +1,1 @@
-{"User.93b06281-bd44-4015-bbe8-1fa0c298c691": {"id": "93b06281-bd44-4015-bbe8-1fa0c298c691", "created_at": "2018-06-14T09:45:52.369371", "updated_at": "2018-06-14T09:47:36.040444", "hello": "world", "__class__": "User"}}
+{"State.11f7edfd-e3fb-4e25-889c-10bc2bd41b2a": {"name": "Nevada", "id": "11f7edfd-e3fb-4e25-889c-10bc2bd41b2a", "updated_at": "2020-03-31T14:45:15.058736", "created_at": "2020-03-31T14:45:15.058736", "__class__": "State"}}
