@@ -67,4 +67,3 @@ class FileStorage:
             for key, value in list(self.__objects.items()):
                 if obj == value:
                     del self.__objects[key]
-                    self.save()
