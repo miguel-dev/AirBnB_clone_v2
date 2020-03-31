@@ -31,6 +31,8 @@ class FileStorage:
                 if type(value) == cls:
                     cls_dict[key] = value
             return cls_dict
+        else:
+             return self.__objects
 
     def new(self, obj):
         """sets __object to given obj
@@ -67,3 +69,5 @@ class FileStorage:
             for key, value in list(self.__objects.items()):
                 if obj == value:
                     del self.__objects[key]
+                    break
+            self.save()
