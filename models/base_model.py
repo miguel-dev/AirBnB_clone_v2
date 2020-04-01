@@ -65,8 +65,6 @@ class BaseModel:
     def delete(self):
         """Deletes current instance from the storage"""
         models.storage.delete(self)
-    if "created_at" not in kwargs:
-        self.created_at = self.updated_at = datetime.now()
 
     def to_dict(self):
         """creates dictionary of the class  and returns
