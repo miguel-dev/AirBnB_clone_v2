@@ -32,14 +32,15 @@ class DBStorage():
         """Print all records from a table"""
         session = self.__session
         dict_reg = {}
+        classes = []
         if not cls:
-            classes = [User, City, Amenity, State, Place, Review]
+            classes.extend([User, City, State, Place])
         else:
-            classes = [eval(cls)]
+            classes.append(cls)
         for clas in classes:
             result = session.query(clas).all()
             for reg in result:
-                key = "{}.{}".format(type(clas), reg.id)
+                key = "{}.{}".format(clas.__name__, reg.id)
                 dict_reg[key] = reg
         return dict_reg
 
