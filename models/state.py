@@ -21,6 +21,7 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
+            """Getter for all cities by state"""
             cities_dict = models.storage.all(City)
             list_cities = []
             for key, value in cities_dict.items():
