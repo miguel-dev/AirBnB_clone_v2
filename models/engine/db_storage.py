@@ -50,14 +50,17 @@ class DBStorage():
         session.add(obj)
 
     def save(self):
+        """Save session in database"""
         session = self.__session
         session.commit()
 
     def delete(self, obj=None):
+        """Delete object from session"""
         session = self.__session
         session.delete(obj)
 
     def reload(self):
+        """Reload session from database"""
         Base.metadata.create_all(self.__engine)
         metasession = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(metasession)
