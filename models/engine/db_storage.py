@@ -40,7 +40,7 @@ class DBStorage():
         for clas in classes:
             result = session.query(clas).all()
             for reg in result:
-                key = "{}.{}".format(reg.__name__, reg.id)
+                key = "{}.{}".format(type(reg).__name__, reg.id)
                 dict_reg[key] = reg
         return dict_reg
 
