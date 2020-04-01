@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Store data in database"""
 from sqlalchemy import (create_engine)
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from os import environ
 from models.base_model import Base
 from models.user import User
@@ -25,7 +25,7 @@ class DBStorage():
                         environ.get("HBNB_MYSQL_HOST"),
                         environ.get("HBNB_MYSQL_DB")),
                         pool_pre_ping=True)
-        if HBNB_ENV == "test":
+        if environ.get("HBNB_ENV") == "test":
             Base.metadata.drop_all(bind=engine)
 
     def all(self, cls=None):
@@ -42,3 +42,22 @@ class DBStorage():
                 key = "{}.{}".format(type(clas), reg.id)
                 dict_reg[key] = reg
         return dict_reg
+
+    def new(self, obj):
+        """Add the object to current database session"""
+        session = self.__session
+        session.add(obj)
+
+    def save(self):
+        session = self.__session
+        session.commit()
+
+    def delete(self, obj=None):
+        session = self.__session
+        session.delete(obj)
+
+    def reload(self):
+        Base.metadata.create_all(self.__engine)
+        metasession = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(metasession)
+        self.__session = Session()
