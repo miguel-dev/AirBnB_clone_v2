@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from os import environ
 
 
 class Place(BaseModel, Base):
@@ -33,3 +34,16 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
+
+    if environ.get("HBNB_TYPE_STORAGE") == "db":
+        reviews = relationship("Review", cascade='delete', backref="place")
+    else:
+        @property
+        def reviews(self):
+            """get all reviews by place"""
+            reviews_dict = models.storage.all(Review)
+            list_reviews = []
+            for key, value in reviews_dict.items():
+                if value.place_id == self.id:
+                    list_reviews.append(value)
+            return list_reviews
