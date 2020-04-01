@@ -26,7 +26,7 @@ class DBStorage():
                         environ.get("HBNB_MYSQL_DB")),
                         pool_pre_ping=True)
         if environ.get("HBNB_ENV") == "test":
-            Base.metadata.drop_all(bind=engine)
+            Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
         """Print all records from a table"""
@@ -40,7 +40,7 @@ class DBStorage():
         for clas in classes:
             result = session.query(clas).all()
             for reg in result:
-                key = "{}.{}".format(clas.__name__, reg.id)
+                key = "{}.{}".format(reg.__name__, reg.id)
                 dict_reg[key] = reg
         return dict_reg
 

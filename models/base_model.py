@@ -34,6 +34,10 @@ class BaseModel:
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 if key != "__class__":
                     setattr(self, key, value)
+            if "id" not in kwargs:
+                self.id = str(uuid.uuid4())
+            if "created_at" not in kwargs:
+                self.created_at = self.updated_at = datetime.now()
         else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()
@@ -61,6 +65,8 @@ class BaseModel:
     def delete(self):
         """Deletes current instance from the storage"""
         models.storage.delete(self)
+    if "created_at" not in kwargs:
+        self.created_at = self.updated_at = datetime.now()
 
     def to_dict(self):
         """creates dictionary of the class  and returns
