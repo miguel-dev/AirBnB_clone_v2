@@ -17,6 +17,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models.engine.file_storage import FileStorage
+from models import storage
 
 
 class TestConsole(unittest.TestCase):
@@ -86,17 +87,25 @@ class TestConsole(unittest.TestCase):
                 "** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("create User")
-            self.assertEqual(
-                37, len(f.getvalue()))
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all User")
             self.assertEqual(
                 "[[User]", f.getvalue()[:7])
+        place = Place(name="My_home", latitude=3.14, max_guest=4)
+        allplace = storage.all(Place)
+        self.assertTrue(allplace[place.id])
+        self.assertEqual(place.name, "My home")
+        self.assertTrue(isinstance(place.name, str))
+        self.assertTrue(isinstance(place.latitude, float))
+        self.assertTrue(isinstance(place.max_guest, int))
+        state = State(name='"California', country="USA")
+        allstate = storage.all(State)
+        self.assertTrue(allstate[state.id])
+        self.assertEqual(state.name, '"California')
+        self.assertTrue(isinstance(state.name, str))
+        self.assertEqual(state.country, "USA")
+        self.assertTrue(isinstance(state.country, str))
 
-        place = Place(name="New_York", max_guest=6, latitude=3.6536)
-        self.assertIsInstance(place.name, str)
-        self.assertIsInstance(place.max_guest, int)
-        self.assertIsInstance(place.latitude, float)
 
     def test_show(self):
         """Test show command inpout"""
