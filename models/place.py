@@ -64,16 +64,11 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            """Get all amenities by place"""
-            amenities_dict = models.storage.all(Amenity)
-            list_amenities = []
-            for key, value in amenities_dict.items():
-                if value.place_id == self.id:
-                    list_amenities.append(value)
-            return list_amenities
+            """Get all amenities ids by place"""
+            return self.amenity_ids
 
         @amenities.setter
         def amenities(self, obj):
             """Appends an amenity id to attribute amenities_id"""
-            if obj and isinstance(obj, Amenity):
+            if obj not in self.amenity_ids and isinstance(obj, Amenity):
                     self.amenities.append(obj.id)
