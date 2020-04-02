@@ -91,21 +91,26 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("all User")
             self.assertEqual(
                 "[[User]", f.getvalue()[:7])
-        place = Place(name="My_home", latitude=3.14, max_guest=4)
-        allplace = storage.all(Place)
-        self.assertTrue(allplace[place.id])
-        self.assertEqual(place.name, "My home")
-        self.assertTrue(isinstance(place.name, str))
-        self.assertTrue(isinstance(place.latitude, float))
-        self.assertTrue(isinstance(place.max_guest, int))
-        state = State(name='"California', country="USA")
-        allstate = storage.all(State)
-        self.assertTrue(allstate[state.id])
-        self.assertEqual(state.name, '"California')
-        self.assertTrue(isinstance(state.name, str))
-        self.assertEqual(state.country, "USA")
-        self.assertTrue(isinstance(state.country, str))
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd('create Place name="Home"\
+            latitude=3.1415 max_guest=5')
+            id = f.getvalue().split("\n")[0]
+        allplace = storage.all()
+        val = allplace["Place." + id]
+        self.assertTrue(val.name, "Home")
+        self.assertTrue(isinstance(val.name, str))
+        self.assertEqual(val.latitude, 3.1415)
+        self.assertTrue(isinstance(val.latitude, float))
+        self.assertEqual(val.max_guest, 5)
+        self.assertTrue(isinstance(val.max_guest, int))
 
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd('create State name="\\"California"')
+            id = f.getvalue().split("\n")[0]
+        allstate = storage.all()
+        val = allplace["State." + id]
+        self.assertTrue(val.name, '"California')
+        self.assertTrue(isinstance(val.name, str))
 
     def test_show(self):
         """Test show command inpout"""
