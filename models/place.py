@@ -77,4 +77,5 @@ class Place(BaseModel, Base):
         def amenities(self, obj):
             """Appends an amenity id to attribute amenities_id"""
             if obj and isinstance(obj, Amenity):
-                self.amenity_ids.append(obj.id)
+                if (obj.place_amenity.place_id == self.id):
+                    self.amenity_ids.append(obj.id)
