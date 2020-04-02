@@ -72,6 +72,8 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("quit")
             self.assertEqual('', f.getvalue())
 
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db",
+                     "Skip if db storage is enabled")
     def test_create(self):
         """Test create command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -84,10 +86,17 @@ class TestConsole(unittest.TestCase):
                 "** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("create User")
+            self.assertEqual(
+                37, len(f.getvalue()))
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all User")
             self.assertEqual(
                 "[[User]", f.getvalue()[:7])
+
+        place = Place(name="New_York", max_guest=6, latitude=3.6536)
+        self.assertIsInstance(place.name, str)
+        self.assertIsInstance(place.max_guest, int)
+        self.assertIsInstance(place.latitude, float)
 
     def test_show(self):
         """Test show command inpout"""
