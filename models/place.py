@@ -68,14 +68,12 @@ class Place(BaseModel, Base):
             amenities_dict = models.storage.all(Amenity)
             list_amenities = []
             for key, value in amenities_dict.items():
-                for amenity_id in self.amenity_ids:
-                    if value.id == amenity_id:
-                        list_amenities.append(value)
+                if value.place_id == self.id:
+                    list_amenities.append(value)
             return list_amenities
 
         @amenities.setter
         def amenities(self, obj):
             """Appends an amenity id to attribute amenities_id"""
             if obj and isinstance(obj, Amenity):
-                if obj.place_id == self.id:
                     self.amenity_ids.append(obj.id)
