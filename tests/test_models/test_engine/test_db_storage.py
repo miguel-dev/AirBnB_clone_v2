@@ -3,8 +3,6 @@
 import unittest
 
 
-@unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db",
-                 "Skip if db storage is enabled")
 class TestDBSTorage(unittest.TestCase):
     """Class for testing DB Storage"""
 
