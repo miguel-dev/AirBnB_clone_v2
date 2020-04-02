@@ -63,6 +63,8 @@ class TestFileStorage(unittest.TestCase):
         key = user.__class__.__name__ + "." + str(user.id)
         self.assertIsNotNone(obj[key])
 
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db",
+                     "Skip if db storage is enabled")
     def test_reload_filestorage(self):
         """
         tests reload
