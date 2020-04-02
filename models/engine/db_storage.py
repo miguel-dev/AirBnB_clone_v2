@@ -34,7 +34,7 @@ class DBStorage():
         dict_reg = {}
         classes = []
         if not cls:
-            classes.extend([User, City, State, Place, Review])
+            classes.extend([User, City, State, Place, Amenity, Review])
         else:
             classes.append(cls)
         for clas in classes:
