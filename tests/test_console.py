@@ -87,30 +87,17 @@ class TestConsole(unittest.TestCase):
                 "** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("create User")
+            self.assertEqual(
+                37, len(f.getvalue()))
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all User")
             self.assertEqual(
                 "[[User]", f.getvalue()[:7])
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd('create Place name="Home"\
-            latitude=3.1415 max_guest=5')
-            id = f.getvalue().split("\n")[0]
-        allplace = storage.all()
-        val = allplace["Place." + id]
-        self.assertTrue(val.name, "Home")
-        self.assertTrue(isinstance(val.name, str))
-        self.assertEqual(val.latitude, 3.1415)
-        self.assertTrue(isinstance(val.latitude, float))
-        self.assertEqual(val.max_guest, 5)
-        self.assertTrue(isinstance(val.max_guest, int))
 
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd('create State name="\\"California"')
-            id = f.getvalue().split("\n")[0]
-        allstate = storage.all()
-        val = allplace["State." + id]
-        self.assertTrue(val.name, '"California')
-        self.assertTrue(isinstance(val.name, str))
+        place = Place(name="New_York", max_guest=6, latitude=3.6536)
+        self.assertIsInstance(place.name, str)
+        self.assertIsInstance(place.max_guest, int)
+        self.assertIsInstance(place.latitude, float)
 
     def test_show(self):
         """Test show command inpout"""
