@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Script to configure server to deploy a fake web static
 apt-get -y update
 apt-get -y install nginx
 mkdir -p /data/web_static/releases/test
