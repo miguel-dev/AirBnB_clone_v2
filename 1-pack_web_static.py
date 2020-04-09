@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Module to create a tar pack with web static files to deploy"""
 from fabric.api import *
 from datetime import datetime
