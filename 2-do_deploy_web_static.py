@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+"""Module to create a tar pack with web static files to deploy"""
+from fabric.api import *
+from datetime import datetime
+import os
+
+env.hosts = ['35.237.183.49', '52.201.229.129']
+env.user = "ubuntu"
+
+
+def do_deploy(archive_path):
+    """Distributes an archive to the web servers"""
+    if not os.path.exists(archive_path):
+        return False
+    try:
+        name = archive_path.split("/")
+        name_ext = name[1]
+        name = name[1].split(".")
+        name = name[0]
+        path = "/data/web_static/releases/" + name
+        put(archive_path, "/tmp/")
+        run("mkdir -p {}".format(path))
+        run("tar -xzf /tmp/{} -C {}".format(name_ext, path))
+        run("rm /tmp/{}".format(name_ext))
+        run("mv {} {}".format(path + "/web_static/*", path))
+        run("rm -rf {}".format(path + "/web_static/"))
+        run("rm -rf /data/web_static/current")
+        run("ln -s {} {}".format(path, "/data/web_static/current"))
+        print("New version deployed!")
+        return True
+    except:
+        return False
