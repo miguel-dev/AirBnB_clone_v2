@@ -60,3 +60,4 @@ We will going to do some changes in this repo.
 AUTHORS
 
 Miguel A. Parada Cañon <michael_v613@hotmail.com>
+Miguel Antonio Cortes
