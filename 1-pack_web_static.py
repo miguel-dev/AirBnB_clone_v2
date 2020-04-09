@@ -12,7 +12,7 @@ def do_pack():
             local("mkdir versions")
         date = datetime.now()
         date_format = date.strftime("%Y%m%d%H%M%S");
-        filename = "versions/web_static_" + date_format + ".tgz";
+        filename = "versions/web_static_" + date_format + ".tgz"
         local("tar -czvf {} web_static".format(filename))
         return filename
     except:
