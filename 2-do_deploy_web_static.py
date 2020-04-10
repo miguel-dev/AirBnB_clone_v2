@@ -17,16 +17,16 @@ def do_deploy(archive_path):
         name_ext = name_ext[-1]
         name = name_ext.split(".")
         name = name[0]
-        path = "/data/web_static/releases/"
+        path = "/data/web_static/releases/" + name
         # instructions
         put(archive_path, "/tmp/")
-        run("mkpath -p {}{}/".format(path, name))
-        run("tar -xzf /tmp/{} -C {}{}/".format(name_ext, path, name))
+        run("mkdir -p {}{}/".format(path, name))
+        run("tar -xzf /tmp/{} -C {}/".format(name_ext, path))
         run("rm /tmp/{}".format(name_ext))
-        run("mv {}{}/web_static/* {}{}/".format(path, name, path, name))
-        run("rm -rf {}{}/web_static".format(path, name))
+        run("mv {}/web_static/* {}/".format(path, path))
+        run("rm -rf {}/web_static".format(path))
         run("rm -rf /data/web_static/current")
-        run("ln -s {}{}/ /data/web_static/current".format(path, name))
+        run("ln -s {}/ /data/web_static/current".format(path))
         print("New version deployed!")
         return (True)
     except:
