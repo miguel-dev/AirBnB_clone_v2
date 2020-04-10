@@ -14,7 +14,7 @@ def do_deploy(archive_path):
         return False
     try:
         name = archive_path.split("/")
-        name_ext = name[1]
+        name_ext = name[-1]
         name = name[1].split(".")
         name = name[0]
         path = "/data/web_static/releases/" + name
