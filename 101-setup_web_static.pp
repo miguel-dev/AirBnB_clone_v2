@@ -1,5 +1,5 @@
 # Manifest that configures a server to deploy web static
-exec { 'cmd_0':
+exec { 'cmd_1':
   path    => '/usr/bin:/bin',
   command => 'sudo apt-get -y update; sudo apt-get -y install nginx',
   returns => [0,1]
