@@ -50,7 +50,7 @@ exec { 'cmd_6':
 exec { 'cmd_7':
   require => Exec['cmd_6'],
   path    => '/usr/bin:/bin',
-  command => 'sed -i "43i\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t\t autoindex on;\n\t}\n" /etc/nginx/sites-available/default',
+  command => 'sed -i "43i\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t\t autoindex on;\n\t}\n" /etc/nginx/sites-enabled/default',
   returns => [0,1]
 }
 
