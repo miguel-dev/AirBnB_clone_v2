@@ -12,21 +12,21 @@ def do_deploy(archive_path):
     """Distributes an archive to the web servers"""
     if not os.path.exists(archive_path):
         return False
+
     try:
         name_ext = archive_path.split('/')
         name_ext = name_ext[-1]
-        name = name_ext.split(".")
+        name = name_ext.split('.')
         name = name[0]
-        path = "/data/web_static/releases/" + name
-        # instructions
+        path = "/data/web_static/releases/"
         put(archive_path, "/tmp/")
-        run("mkdir -p {}/".format(path))
-        run("tar -xzf /tmp/{} -C {}/".format(name_ext, path))
+        run("mkdir -p {}{}/".format(path, name))
+        run("tar -xzf /tmp/{} -C {}{}/".format(name_ext, path, name))
         run("rm /tmp/{}".format(name_ext))
-        run("mv {}/web_static/* {}/".format(path, path))
-        run("rm -rf {}/web_static".format(path))
+        run("mv {}{}/web_static/* {}{}/".format(path, name, path, name))
+        run("rm -rf {}{}/web_static".format(path, name))
         run("rm -rf /data/web_static/current")
-        run("ln -s {}/ /data/web_static/current".format(path))
+        run("ln -s {}{}/ /data/web_static/current".format(path, name))
         print("New version deployed!")
         return (True)
     except:
