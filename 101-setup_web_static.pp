@@ -15,7 +15,7 @@ exec { 'cmd_2':
 exec { 'cmd_3':
   require => Exec['cmd_2'],
   path    => '/usr/bin:/bin',
-  command => 'ln -sf /data/web_static/releases/test/ /data/web_static/current',
+  command => 'sudo ln -sf /data/web_static/releases/test/ /data/web_static/current',
   returns => [0,1]
 }
 
@@ -36,7 +36,7 @@ exec { 'cmd_5':
 exec { 'cmd_6':
   require => Exec['cmd_5'],
   path    => '/usr/bin:/bin',
-  command => 'sudo sed -i "43i\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t\t autoindex on;\n\t}\n" /etc/nginx/sites-available/default',
+  command => 'sudo sed -i \'43i\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t\t autoindex on;\n\t}\n\' /etc/nginx/sites-available/default',
   returns => [0,1]
 }
 
