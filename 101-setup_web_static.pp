@@ -36,7 +36,7 @@ exec { 'cmd_5':
 exec { 'cmd_6':
   require => Exec['cmd_5'],
   path    => '/usr/bin:/bin',
-  command => 'sed -i "43i\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t\t autoindex on;\n\t}\n" /etc/nginx/sites-enabled/default',
+  command => 'sudo sed -i "43i\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t\t autoindex on;\n\t}\n" /etc/nginx/sites-available/default',
   returns => [0,1]
 }
 
