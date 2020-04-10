@@ -22,10 +22,10 @@ def do_deploy(archive_path):
         run("mkdir -p {}".format(path))
         run("tar -xzf /tmp/{} -C {}".format(name_ext, path))
         run("rm /tmp/{}".format(name_ext))
-        run("mv {} {}".format(path + "/web_static/*", path))
-        run("rm -rf {}".format(path + "/web_static/"))
+        run("mv {}/web_static/* {}/".format(path, path))
+        run("rm -rf {}/web_static".format(path))
         run("rm -rf /data/web_static/current")
-        run("ln -s {} {}".format(path, "/data/web_static/current"))
+        run("ln -s {}/ /data/web_static/current".format(path))
         print("New version deployed!")
         return True
     except:
