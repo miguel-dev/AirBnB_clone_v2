@@ -23,8 +23,9 @@ def c_is(text):
     return 'C %s' % text.replace("_", " ")
 
 
+@app.route('/python/', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
-def python_is(text):
+def python_is(text='is cool'):
     """Displays Python followed by the value of the text variable"""
     return 'Python %s' % text.replace("_", " ")
 
